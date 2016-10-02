@@ -30,13 +30,14 @@ def signup(request):
     return render(request , 'signup.html')
 
 def add_user(request):
-    """new_user = User()
+    """ new_user = User()
     new_user.username = request.POST['username']
     new_user.password = request.POST['password']
     new_user.first_name = request.POST['first_name']
     new_user.last_name = request.POST['last_name']
     new_user.email = request.POST['email']
     new_user.save()"""
+    user = User.objects.create_user(request.POST['username'],email=request.POST['email'],password=request.POST['password'])
     return render(request , 'user_added.html')
 
 @login_required(login_url='{% review_it:login_page %}')
@@ -73,4 +74,8 @@ def add_review(request):
 def search(request):
     svalue = request.POST['svalue']
     all_reviews=Review.objects.filter(book=svalue).order_by('-datetime')
-    return render(request , 'results.html' , {'all_reviews':all_reviews})
+    avg=0
+    for review in all_reviews:
+        avg+=review.star_rating
+    avg_rating=round(avg/len(all_reviews),2)
+    return render(request , 'results.html' , {'all_reviews':all_reviews, 'avg_rating': avg_rating , 'title':svalue})
