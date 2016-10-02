@@ -34,6 +34,8 @@
 
 <div class="container">
   <div class="jumbotron">
+    <h1 style="color:black;"> <b>{{ title }}   </b><small style="color:#043A8D;font-size:40%">Average Rating  - {{ avg_rating }} / 5</small></h1>
+    <hr>
     {% for review in all_reviews %}
       <div><h4 style="color:black;"><strong>{{ review.book }} - <span style="color:#043A8D">{{ review.review_by }}</span> <span class="pull-right">{{ review.datetime }}</span></strong></h4></div>
       <p style="color:blue;font-size:small">Rating {{ review.star_rating }}/5</p>
